@@ -314,6 +314,69 @@
 				"type": "event"
 			},
 			{
+				"inputs": [],
+				"name": "ALLOW_LIST_MINT",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "PUBLIC_MINT",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "allowList",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "allowMint",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -453,24 +516,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "id",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "mint",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "address",
 						"name": "to",
 						"type": "address"
@@ -527,6 +572,24 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "publicMint",
+				"outputs": [],
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -598,6 +661,19 @@
 					}
 				],
 				"name": "safeTransferFrom",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "allAddress",
+						"type": "address[]"
+					}
+				],
+				"name": "setAllowList",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -700,6 +776,24 @@
 			{
 				"inputs": [],
 				"name": "unpause",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bool",
+						"name": "_ALLOW_LIST_MINT",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "_PUBLIC_MINT",
+						"type": "bool"
+					}
+				],
+				"name": "updateMintStatus",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -1069,11 +1163,11 @@
 			]
 		},
 		"main.sol": {
-			"keccak256": "0xc5c86be376245cbf79cb41eaddb5583252608f0ac6913fb63a6a2b81f185fce5",
+			"keccak256": "0xeda262e06e7599edf6a25dbb7025e66a2ad8b28ec6c8b3a3803db6bc91b38ce1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://05f35147529631be7990731d3f7b1cdffd04cc0e65154f0eead625e8179d1efd",
-				"dweb:/ipfs/QmThNaDFR8gCBF3yb9ETUQLqkYFnMzL44EsiFuybTUWXmK"
+				"bzz-raw://245d773fa65d4a12552ff01601d12c9fb114bf569ca3372ca1702660b64fa7a4",
+				"dweb:/ipfs/QmTJRsBGhmxdCCXQEYBYZ18E1gSPrgYGDYEnzwHmekwnJT"
 			]
 		}
 	},

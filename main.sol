@@ -19,6 +19,14 @@ contract Main is
 
     uint256 constant MAX_SUPPLY = 1000;
 
+    uint256 constant ALLOW_MINT_PRICE = 0.05 ether;
+
+    bool public ALLOW_LIST_MINT = true;
+
+    bool public PUBLIC_MINT = true;
+
+    mapping(address => bool) public allowList;
+
     constructor(
         address initialOwner
     )
@@ -38,7 +46,30 @@ contract Main is
         _unpause();
     }
 
-    function mint(uint256 id, uint256 amount) public payable {
+    function updateMintStatus(
+        bool _ALLOW_LIST_MINT,
+        bool _PUBLIC_MINT
+    ) external onlyOwner {
+        ALLOW_LIST_MINT = _ALLOW_LIST_MINT;
+        PUBLIC_MINT = _PUBLIC_MINT;
+    }
+
+    function allowMint(uint256 id, uint256 amount) public payable onlyOwner {
+        require(ALLOW_LIST_MINT, "Mint Closed!");
+        require(allowList[msg.sender],"You Are Not On The AllowList");
+        require(msg.value == ALLOW_MINT_PRICE * amount, "Not Enough Money");
+        require(totalSupply(id) + amount <= MAX_SUPPLY, "Max Supply Reached");
+        _mint(msg.sender, id, amount, "");
+    }
+
+    function setAllowList(address[] calldata allAddress)external  onlyOwner{
+        for (uint256 i = 0; i<allAddress.length; i++) {
+            allowList[allAddress[i]] = true;
+        }
+    }
+
+    function publicMint(uint256 id, uint256 amount) public payable {
+        require(PUBLIC_MINT, "Mint Closed!");
         require(msg.value == PUBLIC_PRICE * amount, "Not Enough Money");
         require(totalSupply(id) + amount <= MAX_SUPPLY, "Max Supply Reached");
         _mint(msg.sender, id, amount, "");
@@ -64,7 +95,7 @@ contract Main is
         super._update(from, to, ids, values);
     }
 
-    function withdrawCbalance(address _address) private onlyOwner  {
+    function withdrawCbalance(address _address) private onlyOwner {
         uint256 contractBalance = address(this).balance;
         (bool sucess, ) = payable(_address).call{value: contractBalance}("");
 
