@@ -56,14 +56,13 @@ contract Main is
 
     function allowMint(uint256 id, uint256 amount) public payable onlyOwner {
         require(ALLOW_LIST_MINT, "Mint Closed!");
-        require(allowList[msg.sender],"You Are Not On The AllowList");
+        require(allowList[msg.sender], "You Are Not On The AllowList");
         require(msg.value == ALLOW_MINT_PRICE * amount, "Not Enough Money");
-        require(totalSupply(id) + amount <= MAX_SUPPLY, "Max Supply Reached");
-        _mint(msg.sender, id, amount, "");
+        mint(id, amount);
     }
 
-    function setAllowList(address[] calldata allAddress)external  onlyOwner{
-        for (uint256 i = 0; i<allAddress.length; i++) {
+    function setAllowList(address[] calldata allAddress) external onlyOwner {
+        for (uint256 i = 0; i < allAddress.length; i++) {
             allowList[allAddress[i]] = true;
         }
     }
@@ -71,6 +70,10 @@ contract Main is
     function publicMint(uint256 id, uint256 amount) public payable {
         require(PUBLIC_MINT, "Mint Closed!");
         require(msg.value == PUBLIC_PRICE * amount, "Not Enough Money");
+        mint(id, amount);
+    }
+
+    function mint(uint256 id, uint256 amount) internal payable {
         require(totalSupply(id) + amount <= MAX_SUPPLY, "Max Supply Reached");
         _mint(msg.sender, id, amount, "");
     }
