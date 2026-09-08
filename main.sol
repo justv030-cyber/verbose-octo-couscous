@@ -21,11 +21,15 @@ contract Main is
 
     uint256 constant ALLOW_MINT_PRICE = 0.05 ether;
 
+    uint256 constant MAX_PER_WALLET = 3;
+
     bool public ALLOW_LIST_MINT = true;
 
     bool public PUBLIC_MINT = true;
 
     mapping(address => bool) public allowList;
+
+    mapping(address => uint256) public totalPurchases;
 
     constructor(
         address initialOwner
@@ -73,9 +77,10 @@ contract Main is
         mint(id, amount);
     }
 
-    function mint(uint256 id, uint256 amount) internal payable {
+    function mint(uint256 id, uint256 amount) public payable {
         require(totalSupply(id) + amount <= MAX_SUPPLY, "Max Supply Reached");
         _mint(msg.sender, id, amount, "");
+        totalPurchases[msg.sender] += amount;
     }
 
     function mintBatch(
