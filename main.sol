@@ -6,7 +6,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ERC1155} from "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import {ERC1155Burnable} from "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import {ERC1155Pausable} from "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol";
-import {ERC1155Supply} from "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
+import {ERC1155Supply} from "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";   
 
 contract Main is
     ERC1155,
@@ -50,6 +50,8 @@ contract Main is
         _unpause();
     }
 
+    // for update status allow list mint and public mint
+
     function updateMintStatus(
         bool _ALLOW_LIST_MINT,
         bool _PUBLIC_MINT
@@ -78,8 +80,14 @@ contract Main is
     }
 
     function mint(uint256 id, uint256 amount) public payable {
+        require(
+            totalPurchases[msg.sender] + amount <= MAX_PER_WALLET,
+            "Wallet Limit Reached"
+        );
         require(totalSupply(id) + amount <= MAX_SUPPLY, "Max Supply Reached");
         _mint(msg.sender, id, amount, "");
+
+        // add per wallet NFT 4
         totalPurchases[msg.sender] += amount;
     }
 
